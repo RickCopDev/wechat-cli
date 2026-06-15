@@ -170,7 +170,8 @@ WeChat CLI 专为 AI Agent 设计，所有命令默认输出结构化 JSON。
 你可以使用 `wechat-cli` 查询我的本地微信数据。
 
 常用命令：
-- `wechat-cli sessions --limit 10` — 列出最近会话
+
+- `wechat-cli sessions --last 1d --type private --limit 10` — 列出最近一天的私聊会话
 - `wechat-cli history "名称" --limit 20 --format text` — 读取聊天记录
 - `wechat-cli search "关键词" --chat "聊天名"` — 搜索消息
 - `wechat-cli contacts --query "名称"` — 搜索联系人
@@ -181,6 +182,7 @@ WeChat CLI 专为 AI Agent 设计，所有命令默认输出结构化 JSON。
 ```
 
 然后在对话中可以直接问 Claude：
+
 - "帮我看看微信有没有未读消息"
 - "在项目群里搜索关于截止日期的消息"
 - "看看这周 AI 群里谁发言最多？"
@@ -307,18 +309,18 @@ wechat-cli new-messages                    # 后续: 仅返回上次以来的新
 
 `--type` 选项（适用于 `history` 和 `search`）：
 
-| 值 | 说明 |
-|---|------|
-| `text` | 文本消息 |
-| `image` | 图片 |
-| `voice` | 语音 |
-| `video` | 视频 |
-| `sticker` | 表情 |
-| `location` | 位置 |
-| `link` | 链接/应用消息 |
-| `file` | 文件 |
-| `call` | 音视频通话 |
-| `system` | 系统消息 |
+| 值         | 说明          |
+| ---------- | ------------- |
+| `text`     | 文本消息      |
+| `image`    | 图片          |
+| `voice`    | 语音          |
+| `video`    | 视频          |
+| `sticker`  | 表情          |
+| `location` | 位置          |
+| `link`     | 链接/应用消息 |
+| `file`     | 文件          |
+| `call`     | 音视频通话    |
+| `system`   | 系统消息      |
 
 ---
 
@@ -333,12 +335,12 @@ wechat-cli new-messages                    # 后续: 仅返回上次以来的新
 
 ## 🖥️ 平台支持
 
-| 平台 | 状态 | 说明 |
-|------|------|------|
-| macOS (Apple Silicon) | ✅ 支持 | 内置 arm64 二进制 |
-| macOS (Intel) | ✅ 支持 | 需要 x86_64 二进制 |
-| Windows | ✅ 支持 | 读取 Weixin.exe 进程内存 |
-| Linux | ✅ 支持 | 读取 /proc/pid/mem，需要 root |
+| 平台                  | 状态    | 说明                          |
+| --------------------- | ------- | ----------------------------- |
+| macOS (Apple Silicon) | ✅ 支持 | 内置 arm64 二进制             |
+| macOS (Intel)         | ✅ 支持 | 需要 x86_64 二进制            |
+| Windows               | ✅ 支持 | 读取 Weixin.exe 进程内存      |
+| Linux                 | ✅ 支持 | 读取 /proc/pid/mem，需要 root |
 
 ---
 

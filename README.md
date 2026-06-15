@@ -172,7 +172,8 @@ Add to your project's `CLAUDE.md`:
 You can use `wechat-cli` to query my local WeChat data.
 
 Common commands:
-- `wechat-cli sessions --limit 10` — list recent chats
+
+- `wechat-cli sessions --last 1d --type private --limit 10` — list recent private chats in past 1 day
 - `wechat-cli history "NAME" --limit 20 --format text` — read chat history
 - `wechat-cli search "KEYWORD" --chat "CHAT_NAME"` — search messages
 - `wechat-cli contacts --query "NAME"` — search contacts
@@ -183,6 +184,7 @@ Common commands:
 ```
 
 Then in conversation you can ask Claude things like:
+
 - "Check my unread WeChat messages"
 - "Search for messages about the project deadline in the Team group"
 - "Who sent the most messages in the AI group this week?"
@@ -309,18 +311,18 @@ State saved at `~/.wechat-cli/last_check.json`. Delete to reset.
 
 The `--type` option (on `history` and `search`):
 
-| Value | Description |
-|-------|-------------|
-| `text` | Text messages |
-| `image` | Images |
-| `voice` | Voice messages |
-| `video` | Videos |
-| `sticker` | Stickers/emojis |
-| `location` | Location shares |
-| `link` | Links and app messages |
-| `file` | File attachments |
-| `call` | Voice/video calls |
-| `system` | System messages |
+| Value      | Description            |
+| ---------- | ---------------------- |
+| `text`     | Text messages          |
+| `image`    | Images                 |
+| `voice`    | Voice messages         |
+| `video`    | Videos                 |
+| `sticker`  | Stickers/emojis        |
+| `location` | Location shares        |
+| `link`     | Links and app messages |
+| `file`     | File attachments       |
+| `call`     | Voice/video calls      |
+| `system`   | System messages        |
 
 ---
 
@@ -335,12 +337,12 @@ The `--type` option (on `history` and `search`):
 
 ## 🖥️ Platform Support
 
-| Platform | Status | Notes |
-|----------|--------|-------|
-| macOS (Apple Silicon) | ✅ Supported | Bundled arm64 binary |
-| macOS (Intel) | ✅ Supported | x86_64 binary needed |
-| Windows | ✅ Supported | Reads Weixin.exe process memory |
-| Linux | ✅ Supported | Reads /proc/pid/mem, requires root |
+| Platform              | Status       | Notes                              |
+| --------------------- | ------------ | ---------------------------------- |
+| macOS (Apple Silicon) | ✅ Supported | Bundled arm64 binary               |
+| macOS (Intel)         | ✅ Supported | x86_64 binary needed               |
+| Windows               | ✅ Supported | Reads Weixin.exe process memory    |
+| Linux                 | ✅ Supported | Reads /proc/pid/mem, requires root |
 
 ---
 
