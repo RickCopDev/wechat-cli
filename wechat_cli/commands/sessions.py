@@ -65,8 +65,8 @@ def _parse_last_time(value):
 @click.option("--last", "last_time", default=None,
               help="快捷时间过滤: 1h/2hours(最近N小时), 3d/4days(最近N天), today(今天)")
 @click.option("--type", "session_type", default=None,
-              type=click.Choice(["group", "private", "official"]),
-              help="会话类型过滤: group(群聊), private(私聊), official(公众号/服务号)")
+              type=click.Choice(["group", "private", "official", "chat"]),
+              help="会话类型过滤: group(群聊), private(私聊), official(公众号/服务号), chat(群聊+私聊, 排除公众号)")
 @click.option("--format", "fmt", default="json", type=click.Choice(["json", "text"]), help="输出格式")
 @click.pass_context
 def sessions(ctx, limit, last_time, session_type, fmt):
@@ -82,6 +82,7 @@ def sessions(ctx, limit, last_time, session_type, fmt):
       wechat-cli sessions --type group      # 仅群聊会话
       wechat-cli sessions --type private    # 仅私聊会话
       wechat-cli sessions --type official   # 仅公众号/服务号
+      wechat-cli sessions --type chat       # 群聊+私聊 (排除公众号)
       wechat-cli sessions --format text    # 纯文本输出
     """
     app = ctx.obj
@@ -100,7 +101,7 @@ def sessions(ctx, limit, last_time, session_type, fmt):
     names = get_contact_names(app.cache, app.decrypted_dir)
 
     # Build a set of official account usernames for filtering
-    if session_type == 'private' or session_type == 'official':
+    if session_type in ('private', 'official', 'chat'):
         official_set = _load_official_accounts(app)
 
     with closing(sqlite3.connect(path)) as conn:
@@ -111,10 +112,12 @@ def sessions(ctx, limit, last_time, session_type, fmt):
             params.append(start_ts)
         if session_type == 'group':
             clauses.append("username LIKE '%@chatroom'")
-        elif session_type == 'private':
-            # Filter out groups, gh_* accounts, brandsessionholder variants,
-            # and any account with verify_flag >= 8 (official/service)
-            clauses.append("username NOT LIKE '%@chatroom'")
+        elif session_type in ('private', 'chat'):
+            # Filter out groups for 'private'; keep them for 'chat'.
+            # Either way, exclude gh_* accounts, brandsessionholder variants,
+            # and any account with verify_flag >= 8 (official/service).
+            if session_type == 'private':
+                clauses.append("username NOT LIKE '%@chatroom'")
             clauses.append("username NOT LIKE 'gh_%'")
             # brandsessionholder and brandservicesessionholder
             # (SQLite LIKE with % in string literal doesn't work as wildcard,

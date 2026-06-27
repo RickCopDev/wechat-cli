@@ -215,6 +215,7 @@ wechat-cli new-messages --format text
 wechat-cli sessions                        # 最近 20 个会话
 wechat-cli sessions --limit 10             # 最近 10 个
 wechat-cli sessions --format text          # 纯文本输出
+wechat-cli sessions --type chat            # 群聊+私聊 (排除公众号)
 ```
 
 ### `history` — 聊天记录

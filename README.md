@@ -217,6 +217,7 @@ wechat-cli new-messages --format text
 wechat-cli sessions                        # Last 20 sessions
 wechat-cli sessions --limit 10             # Last 10
 wechat-cli sessions --format text          # Human-readable
+wechat-cli sessions --type chat            # Groups + private chats (excl. official)
 ```
 
 ### `history` — Chat Messages
